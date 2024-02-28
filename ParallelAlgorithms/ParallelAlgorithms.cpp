@@ -6,13 +6,7 @@
 
 namespace SimpleImplementation {
     void Task1() {
-        std::cout << "Task1" << std::endl;
-        auto start = std::chrono::steady_clock::now();
-
         std::cout << "Hello world" << std::endl;
-
-        auto end = std::chrono::steady_clock::now();
-        std::cout << "Elapsed time:" << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms" << std::endl;
     }
 
     void Task2(int* arr, int Length) {
@@ -33,16 +27,10 @@ namespace SimpleImplementation {
 
 namespace OpenMP {
     void Task1(){
-        std::cout << "Task1_OMP" << std::endl;
-        auto start = std::chrono::steady_clock::now();
-
         #pragma omp parallel
         {
             std::cout << "Hello world from thread " << omp_get_thread_num() << std::endl;
         }
-
-        auto end = std::chrono::steady_clock::now();
-        std::cout <<"Elapsed time:" << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms" << std::endl;
     }
 
     void Task2(int* arr, int Length) {
@@ -198,6 +186,4 @@ int main()
     MPI_Finalize();
 
     std::cout << std::endl;
-
-    
 }
