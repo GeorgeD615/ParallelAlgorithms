@@ -4,6 +4,8 @@
 #include <ctime>
 #include <thread>
 
+
+//Implementation without frameworks
 namespace SimpleImplementation {
     void Task1() {
         std::cout << "Hello world" << std::endl;
@@ -25,6 +27,7 @@ namespace SimpleImplementation {
 
 }
 
+//Implementation with OpenMP framework
 namespace OpenMP {
     void Task1(){
         #pragma omp parallel
@@ -48,16 +51,13 @@ namespace OpenMP {
     }
 }
 
+//Implementation with MPI framework
 //Command to run an application on 4 mpi processors:
 //mpiexec -n 4 ParallelAlgorithms 
 namespace MPI {
 
     void Task1(int size, int rank) {
-        std::cout << "Task1_MPI" << std::endl;
-        auto start = std::chrono::steady_clock::now();
         std::cout << "Hello world from processor " << rank <<  " out of " << size << " processors." << std::endl;
-        auto end = std::chrono::steady_clock::now();
-        std::cout << "Elapsed time:" << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms" << std::endl;
     }
 
     void Task2(int* arr, int Length, int rank, int size) {
@@ -66,7 +66,7 @@ namespace MPI {
 
         int n = Length;
 
-        // Temporary array for slave process
+        // temp array for secondary process
         int* arr2 = new int[Length / size + 1];
 
         int elements_per_process, n_elements_recieved;
@@ -89,7 +89,7 @@ namespace MPI {
                     MPI_Send(&arr[index], elements_per_process, MPI_INT, i, 0, MPI_COMM_WORLD);
                 }
 
-                // последний процесс подсчитывает оставшиеся элементы
+                // last process count left elements
                 index = i * elements_per_process;
                 int elements_left = n - index;
 
@@ -128,9 +128,6 @@ namespace MPI {
             // sends the partial sum to the root process
             MPI_Send(&partial_sum, 1, MPI_INT, 0, 0, MPI_COMM_WORLD);
         }
-
-        // cleans up all MPI state before exit of process
-
 
         auto end = std::chrono::steady_clock::now();
         std::cout << "Elapsed time:" << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms" << std::endl;
