@@ -14,7 +14,7 @@ double df_dx(double x, double y, double h) {
 
 int* GenerateRandomArray(int n) {
     int* arr = new int[n];
-#pragma omp parallel for
+    #pragma omp parallel for
     for (int i = 0; i < n; ++i) {
         arr[i] = rand() % 10;
     }
