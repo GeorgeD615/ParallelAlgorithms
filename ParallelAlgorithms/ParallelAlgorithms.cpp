@@ -107,7 +107,7 @@ namespace OpenMP {
     void Task1(){
         #pragma omp parallel
         {
-            std::cout << "Hello world from thread " << omp_get_thread_num() << std::endl;
+            std::cout << "Hello world from thread " << omp_get_thread_num() <<std::endl;
         }
     }
 
@@ -126,7 +126,7 @@ namespace OpenMP {
     }
 
     void Task3(int rows, int cols) {
-        std::cout << "Task3_OMP : " << rows * cols << " elements" << std::endl;
+        std::cout << "Task3_OMP : " << rows << " elements" << std::endl;
         auto start = std::chrono::steady_clock::now();
 
         const double h = 0.01; // Ўаг сетки
@@ -148,7 +148,7 @@ namespace OpenMP {
     }
 
     void Task4(int** A, int** B, int rowsA, int colsA, int colsB) {
-        std::cout << "Task4 : " << rowsA * colsA << " elements" << std::endl;
+        std::cout << "Task4 : " << rowsA << " elements" << std::endl;
         auto start = std::chrono::steady_clock::now();
 
         int** result = new int* [rowsA];
@@ -414,49 +414,59 @@ int main()
 
     SimpleImplementation::Task4(GenerateRandomMatrix(10, 10), GenerateRandomMatrix(10, 10), 10, 10, 10);
     SimpleImplementation::Task4(GenerateRandomMatrix(100, 100), GenerateRandomMatrix(100, 100), 100, 100, 100);
-    SimpleImplementation::Task4(GenerateRandomMatrix(1000, 1000), GenerateRandomMatrix(1000, 1000), 1000, 1000, 1000);
+    SimpleImplementation::Task4(GenerateRandomMatrix(1000, 1000), GenerateRandomMatrix(1000, 1000), 1000, 1000, 1000);*/
 
 
-    std::cout << std::endl;
+    //std::cout << std::endl;
 
-    std::cout << "------OpenMP implementation------" << std::endl;
+    /*std::cout << "------OpenMP implementation------" << std::endl;
+    omp_set_num_threads(5);*/
 
-    OpenMP::Task1();
+    /*OpenMP::Task1();
 
     OpenMP::Task2(GenerateRandomArray(10), 10);
+    OpenMP::Task2(GenerateRandomArray(100), 100);
     OpenMP::Task2(GenerateRandomArray(1000), 1000);
+    OpenMP::Task2(GenerateRandomArray(10000), 10000);
+    OpenMP::Task2(GenerateRandomArray(100000), 100000);
+    OpenMP::Task2(GenerateRandomArray(1000000), 1000000);
     OpenMP::Task2(GenerateRandomArray(10000000), 10000000);
+    OpenMP::Task2(GenerateRandomArray(100000000), 100000000);
 
     OpenMP::Task3(10, 10);
     OpenMP::Task3(100, 100);
     OpenMP::Task3(1000, 1000);
+    OpenMP::Task3(10000, 10000);*/
 
-    OpenMP::Task4(GenerateRandomMatrix(10, 10), GenerateRandomMatrix(10, 10), 10, 10, 10);
+    /*OpenMP::Task4(GenerateRandomMatrix(10, 10), GenerateRandomMatrix(10, 10), 10, 10, 10);
     OpenMP::Task4(GenerateRandomMatrix(100, 100), GenerateRandomMatrix(100, 100), 100, 100, 100);
-    OpenMP::Task4(GenerateRandomMatrix(1000, 1000), GenerateRandomMatrix(1000, 1000), 1000, 1000, 1000);*/
+    OpenMP::Task4(GenerateRandomMatrix(1000, 1000), GenerateRandomMatrix(1000, 1000), 1000, 1000, 1000);
+    OpenMP::Task4(GenerateRandomMatrix(10000, 10000), GenerateRandomMatrix(10000, 10000), 10000, 10000, 10000);
+    OpenMP::Task4(GenerateRandomMatrix(100000, 100000), GenerateRandomMatrix(100000, 100000), 100000, 100000, 100000);*/
 
     //std::cout << std::endl;
 
-    //std::cout << "------MPI implementation------" << std::endl;
-    //MPI_Init(NULL, NULL);
-    //int rank, size;
-    //MPI_Comm_size(MPI_COMM_WORLD, &size);
-    //MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    std::cout << "------MPI implementation------" << std::endl;
+    MPI_Init(NULL, NULL);
+    int rank, size;
+    MPI_Comm_size(MPI_COMM_WORLD, &size);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     //MPI::Task1(rank, size);
-    //
+    
     // на 4х потоках 
-    //MPI::Task2(GenerateRandomArray(10), 10, rank, size);
+    //MPI::Task2(GenerateRandomArray(100), 100, rank, size);
     //MPI::Task2(GenerateRandomArray(1000), 1000, rank, size);
     //MPI::Task2(GenerateRandomArray(10000000), 10000000, rank, size);
+    //MPI::Task2(GenerateRandomArray(100000000), 100000000, rank, size);
 
     //на 5и потоках
     //MPI::Task3(10, 10, rank, size);
     //MPI::Task3(100, 100, rank, size);
     //MPI::Task3(1000, 1000, rank, size);
+    //MPI::Task3(10000, 10000, rank, size);
 
     //на 3х потоках
     //MPI::Task4(GenerateRandomMatrix(16, 16), GenerateRandomMatrix(16, 16), 16, 16, 16, rank, size);
-    //MPI::Task4(GenerateRandomMatrix(128, 128), GenerateRandomMatrix(128, 128), 128, 128, 128, rank, size);
     //MPI::Task4(GenerateRandomMatrix(1024, 1024), GenerateRandomMatrix(1024, 1024), 1024, 1024, 1024, rank, size);
     //MPI::Task4(GenerateRandomMatrix(2048, 2048), GenerateRandomMatrix(2048, 2048), 2048, 2048, 2048, rank, size);
 
